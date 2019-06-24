@@ -65,7 +65,6 @@ describe('/ Home Page', () => {
 
   //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
   test(`Test Datalayer`, async () => {
-    await console.log('In test');
     for await (testable of arrayOfTests) {
       //await console.log(testable[0], testable[1]);
       await expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
