@@ -1,0 +1,4 @@
+{
+    "main": "https://www.argos.co.uk/product/1155033",
+    "networkintercept": ["https://www.google-analytics.com"]
+}
