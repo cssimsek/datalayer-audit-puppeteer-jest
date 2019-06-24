@@ -8,4 +8,4 @@ node_modules/
 credentials/
 
 #Data dictionaries
-datadictionary/
+datadictionary/*.xlsx
