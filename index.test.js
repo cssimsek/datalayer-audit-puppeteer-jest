@@ -12,6 +12,8 @@ const storenetworkintercept = require('./utilities/storenetworkintercept');
 const readSpreadsheet = require('./utilities/readspreadsheet');
 //Iterator abstraction for dataDictionaryObject.entries traversal
 const iterateDataDictionary = require('./utilities/iterateDataDictionary');
+//Utility function that encapsulates data layer processing steps
+const processCapturedDataLayer = require('./utilities/processcaptureddatalayer');
 
 const timeout = 10000;
 let incognitoBrowser, page, dataDictionaryObject;
@@ -29,7 +31,7 @@ beforeAll(async () => {
       request.continue();
     }
   });
-  dataDictionaryObject = await readSpreadsheet();
+  //dataDictionaryObject = await readSpreadsheet();
 }, timeout);
 
 const stepOpts = {
@@ -42,30 +44,13 @@ const stepOpts = {
 
 describe('/ Home Page', () => {
 
-  const that = this;
-  let datalayerObject, dataLayerObjectFlat, dataLayerFromPageEntries, dataDictionaryEntries, resultOfStepOne;
-
-  beforeAll(async () => {
-    resultOfStepOne = await stepCollection.one.takeStep(page, stepOpts);
-    datalayerObject = await resultOfStepOne[0];
-    dataLayerObjectFlat = await resultOfStepOne[1];
-    dataLayerFromPageEntries = await Object.entries(dataLayerObjectFlat);
-    dataDictionaryEntries = await Object.values(dataDictionaryObject);
-    const ddPropIterator = await iterateDataDictionary(dataDictionaryEntries);
-    const firstMatcher = await ddPropIterator.next().value;
-    arrayOfTests = await dataLayerFromPageEntries.map(flatProp => {
-      if (new RegExp(firstMatcher['Key_Pattern']).test(flatProp[0])) {
-        return [flatProp[1], new RegExp(firstMatcher['Value_Pattern'])];
-      }
-    })
-    global.arrayOfTests = await arrayOfTests.filter(el => !!el);
-    //await console.log(arrayOfTests);
-
-  })
-
-  //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
+  beforeAll(async () => {});
+  
   test(`Test Datalayer`, async () => {
-    for await (testable of arrayOfTests) {
+    const resultOfStepOne = await stepCollection.one.takeStep(page, stepOpts);
+    const arrayOfDataTests = await processCapturedDataLayer(resultOfStepOne);
+    //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
+    for await (testable of arrayOfDataTests) {
       //await console.log(testable[0], testable[1]);
       await expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
     }
@@ -76,6 +61,8 @@ describe('/ Home Page', () => {
 
 describe('Click Consent Banner', () => {
 
+  beforeAll(async () => {});
+
   test('Consent Banner Clicked', async () => {
     resultOfStepTwo = await stepCollection.two.takeStep(page, stepOpts);
     return resultOfStepTwo;
@@ -84,6 +71,8 @@ describe('Click Consent Banner', () => {
 });
 
 describe('Add To Basket Flow', () => {
+
+  beforeAll(async () => {});
 
   test('Click Add To Basket', async () => {
     resultOfStepThree = await stepCollection.three.takeStep(page, stepOpts);
@@ -99,6 +88,8 @@ describe('Add To Basket Flow', () => {
 
 describe('Postcode and Collect Flow', () => {
 
+  beforeAll(async () => {});
+
   test('Enter Postcode and Click Collection', async () => {
     resultOfStepFive = await stepCollection.five.takeStep(page, stepOpts);
     return resultOfStepFive;
@@ -107,6 +98,8 @@ describe('Postcode and Collect Flow', () => {
 });
 
 describe('Continue To Payment Flow', () => {
+
+  beforeAll(async () => {});
 
   test('Click Continue to Pay and Collect', async () => {
     resultOfStepSix = await stepCollection.six.takeStep(page, stepOpts);
