@@ -1,3 +1,5 @@
+//Browser creation with opts
+const createBrowser = require('./utilities/createbrowser');
 //Import target page
 const targeturls = require('./targets/targeturls');
 //Import target data
@@ -6,32 +8,20 @@ const targetdata = require('./targets/targetdataobjects.json');
 const stepCollection = require('./test-steps/step-collection');
 //Get data and take screenshots
 const gdts = require('./utilities/getdatatakescreenshot');
-//Store matching network interceptions
-const storenetworkintercept = require('./utilities/storenetworkintercept');
-//Get Data Dictionary for comparison
-const readSpreadsheet = require('./utilities/readspreadsheet');
-//Iterator abstraction for dataDictionaryObject.entries traversal
-const iterateDataDictionary = require('./utilities/iterateDataDictionary');
 //Utility function that encapsulates data layer processing steps
 const processCapturedDataLayer = require('./utilities/processcaptureddatalayer');
+//Utility to set network interception rules
+const setNetworkInterception = require('./utilities/setnetworkinterception');
+
 
 const timeout = 10000;
-let incognitoBrowser, page, dataDictionaryObject;
+let browser, page;
 beforeAll(async () => {
-  incognitoBrowser = await global.__BROWSER__.createIncognitoBrowserContext();
-  page = await incognitoBrowser.newPage();
-  await page.setRequestInterception(true);
-  console.log(targeturls.networkintercept);
-  page.on('request', async request => {
-    let reqUrl = await request.url();
-    if (reqUrl.indexOf(targeturls.networkintercept) != -1) {
-      await storenetworkintercept(request);
-      await request.continue();
-    } else {
-      await request.continue();
-    }
-  });
-  //dataDictionaryObject = await readSpreadsheet();
+  //Create browser and page
+  browser = await createBrowser({incognito:true});
+  page = await browser.newPage();
+  //Set network interception
+  await setNetworkInterception(page);
 }, timeout);
 
 const stepOpts = {
