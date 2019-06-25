@@ -23,12 +23,12 @@ beforeAll(async () => {
   await page.setRequestInterception(true);
   console.log(targeturls.networkintercept);
   page.on('request', async request => {
-    let reqUrl = request.url();
+    let reqUrl = await request.url();
     if (reqUrl.indexOf(targeturls.networkintercept) != -1) {
       await storenetworkintercept(request);
-      request.continue();
+      await request.continue();
     } else {
-      request.continue();
+      await request.continue();
     }
   });
   //dataDictionaryObject = await readSpreadsheet();
