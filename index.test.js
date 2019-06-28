@@ -41,7 +41,7 @@ const stepOpts = {
 //Extend EXPECT with toMatchDataDictRegex
 
 expect.extend({
-  toMatchDataDictRegex(value,dlMatchArray) {
+  toMatchDataDictRegex(value, dlMatchArray) {
     const pass = dlMatchArray[1].test(value);
     if (pass) {
       return {
@@ -52,7 +52,7 @@ expect.extend({
     } else {
       return {
         message: () =>
-           `expected ${value} to test true for ${dlMatchArray[1]} of keyPattern ${dlMatchArray[2]}`,
+          `expected ${value} to test true for ${dlMatchArray[1]} of keyPattern ${dlMatchArray[2]}`,
         pass: false,
       };
     }
@@ -63,7 +63,7 @@ expect.extend({
 
 describe('/ Home Page', () => {
 
-  beforeAll(async () => { });
+  beforeAll(async () => {});
 
   test(`Test Datalayer`, async () => {
     //const resultOfStepOne = await stepCollection.one.takeStep(page, stepOpts);
@@ -71,9 +71,9 @@ describe('/ Home Page', () => {
     const arrayOfDataTests = await processCapturedDataLayer(resultOfStepOne);
     //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
     for await (testable of arrayOfDataTests) {
-        console.log(testable[0], testable[1]);
-        //expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
-        expect(testable[0]).toMatchDataDictRegex(testable);
+      console.log(testable[0], testable[1]);
+      //expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
+      expect(testable[0]).toMatchDataDictRegex(testable);
     }
   });
 
@@ -89,9 +89,9 @@ describe('Click Consent Banner', () => {
     const arrayOfDataTests = await processCapturedDataLayer(resultOfStepTwo);
     //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
     for await (testable of arrayOfDataTests) {
-        console.log(testable[0], testable[1]);
-        //expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
-        expect(testable[0]).toMatchDataDictRegex(testable);
+      console.log(testable[0], testable[1]);
+      //expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
+      expect(testable[0]).toMatchDataDictRegex(testable);
     }
   });
 
