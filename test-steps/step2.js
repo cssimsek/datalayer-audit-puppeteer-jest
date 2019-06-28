@@ -18,7 +18,8 @@ async function takeStep(page,opts) {
 
     await page.evaluate(() => alert('Cookie Consent Clicked'));
 
-    return bannerClicked;
+    const dataObjects = await opts.gdts.getdatatakescreenshot(page,opts.targetdata);
+    return [dataObjects.datalayer,dataObjects.flattenedW3C]; 
 
     /*
     const dataObjects = await opts.gdts.getdatatakescreenshot(page,opts.targetdata);

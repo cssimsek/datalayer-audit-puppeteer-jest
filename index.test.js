@@ -5,8 +5,8 @@ const targeturls = require('./targets/targeturls');
 //Import target data
 const targetdata = require('./targets/targetdataobjects.json');
 //Import Steps
-const stepCollection = require('./test-steps/step-collection');
-//Alternative approach to steps collection
+//const stepCollection = require('./test-steps/step-collection');
+//More flexible approach to steps collection
 const FilesInDirectory = require('./utilities/getfilesindirectory');
 //Get data and take screenshots
 const gdts = require('./utilities/getdatatakescreenshot');
@@ -24,7 +24,9 @@ const timeout = 10000;
 let browser, page;
 beforeAll(async () => {
   //Create browser and page
-  browser = await createBrowser({incognito:true});
+  browser = await createBrowser({
+    incognito: true
+  });
   page = await browser.newPage();
   //Set network interception
   await setNetworkInterception(page);
@@ -36,23 +38,44 @@ const stepOpts = {
   targetdata: targetdata
 };
 
-//JEST DESCRIBE TESTS
+//Extend EXPECT with toMatchDataDictRegex
+
+expect.extend({
+  toMatchDataDictRegex(value,dlMatchArray) {
+    const pass = dlMatchArray[1].test(value);
+    if (pass) {
+      return {
+        message: () =>
+          `expected ${value} to test true for ${dlMatchArray[1]} of keyPattern ${dlMatchArray[2]}`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () =>
+           `expected ${value} to test true for ${dlMatchArray[1]} of keyPattern ${dlMatchArray[2]}`,
+        pass: false,
+      };
+    }
+  },
+});
+
+//Describe JESTs
 
 describe('/ Home Page', () => {
 
-  beforeAll(async () => {});
-  
+  beforeAll(async () => { });
+
   test(`Test Datalayer`, async () => {
     //const resultOfStepOne = await stepCollection.one.takeStep(page, stepOpts);
     const resultOfStepOne = await StepsGenerator.next().value.takeStep(page, stepOpts);
     const arrayOfDataTests = await processCapturedDataLayer(resultOfStepOne);
     //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
     for await (testable of arrayOfDataTests) {
-      //await console.log(testable[0], testable[1]);
-      await expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
+        console.log(testable[0], testable[1]);
+        //expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
+        expect(testable[0]).toMatchDataDictRegex(testable);
     }
   });
-
 
 });
 
@@ -63,7 +86,13 @@ describe('Click Consent Banner', () => {
   test('Consent Banner Clicked', async () => {
     //const resultOfStepTwo = await stepCollection.two.takeStep(page, stepOpts);
     const resultOfStepTwo = await StepsGenerator.next().value.takeStep(page, stepOpts);
-    return resultOfStepTwo;
+    const arrayOfDataTests = await processCapturedDataLayer(resultOfStepTwo);
+    //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
+    for await (testable of arrayOfDataTests) {
+        console.log(testable[0], testable[1]);
+        //expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
+        expect(testable[0]).toMatchDataDictRegex(testable);
+    }
   });
 
 });

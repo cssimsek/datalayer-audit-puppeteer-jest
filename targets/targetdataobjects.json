@@ -1,6 +1,6 @@
 {
     "w3cDataLayerName": "digitalData",
-    "dataDictionaryPath":"datadictionary/data-dictionary-argos.xlsx",
+    "dataDictionaryPath":"datadictionary/data-dictionary-main.xlsx",
     "localStorageTargets": [],
     "sessionStorageTargets": []
 
