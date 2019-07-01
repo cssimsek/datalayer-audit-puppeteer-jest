@@ -1,4 +1,4 @@
-const gdts = require('../utilities/getdatatakescreenshot');
+const sdj = require('../utilities/stepdatajob');
 const formFieldVals = require('../form-dummy-values/formvals.json');
 
 async function takeStep(page,opts) {
@@ -29,19 +29,12 @@ async function takeStep(page,opts) {
     await page.waitFor('div.sm-4.sm-4--none>button');
 
     //Select First Match in Store list
-    const firstAddressMatchClicked = await page.evaluate(()=> {
+    await page.evaluate(()=> {
         return Promise.resolve(document.querySelector('div.sm-4.sm-4--none>button').click());
     });
     
+    return await sdj(page, opts);
 
-    //await page.waitForNavigation('domcontentloaded');
-
-    return firstAddressMatchClicked;
-
-    /*
-    const dataObjects = await opts.gdts.getdatatakescreenshot(page,opts.targetdata);
-    return [dataObjects.datalayer,dataObjects.flattenedW3C]; 
-    */
 }
 
 module.exports.takeStep = takeStep;

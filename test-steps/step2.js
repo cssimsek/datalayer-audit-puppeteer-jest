@@ -1,6 +1,6 @@
-const gdts = require('../utilities/getdatatakescreenshot');
+const sdj = require('../utilities/stepdatajob');
 
-async function takeStep(page,opts) {
+async function takeStep(page, opts) {
 
     await page.waitFor('.privacy-prompt-footer>a');
 
@@ -9,22 +9,17 @@ async function takeStep(page,opts) {
         await console.log(dialog.message());
         await page.waitFor(2000);
         await dialog.dismiss();
-      });
+    });
 
     //Click Cookie Consent Banner
-    const bannerClicked = await page.evaluate(()=> {
+    await page.evaluate(() => {
         return Promise.resolve(document.querySelector('.privacy-prompt-footer>a').click());
-    }); 
+    });
 
     await page.evaluate(() => alert('Cookie Consent Clicked'));
 
-    const dataObjects = await opts.gdts.getdatatakescreenshot(page,opts.targetdata);
-    return [dataObjects.datalayer,dataObjects.flattenedW3C]; 
+    return await sdj(page, opts);
 
-    /*
-    const dataObjects = await opts.gdts.getdatatakescreenshot(page,opts.targetdata);
-    return [dataObjects.datalayer,dataObjects.flattenedW3C]; 
-    */
 }
 
 module.exports.takeStep = takeStep;

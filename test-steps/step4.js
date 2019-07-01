@@ -1,4 +1,4 @@
-const gdts = require('../utilities/getdatatakescreenshot');
+const sdj = require('../utilities/stepdatajob');
 
 async function takeStep(page,opts) {
 
@@ -7,18 +7,14 @@ async function takeStep(page,opts) {
     await page.waitFor('.button.button--full.xs-hidden.sm-block');
 
     //Click Go To Trolley
-    const goToTrolleyClicked = await page.evaluate(()=> {
+    await page.evaluate(()=> {
         return Promise.resolve(document.querySelector('.button.button--full.xs-hidden.sm-block').click());
     });
 
     await page.waitForNavigation('domcontentloaded');
 
-    return goToTrolleyClicked;
-
-    /*
-    const dataObjects = await opts.gdts.getdatatakescreenshot(page,opts.targetdata);
-    return [dataObjects.datalayer,dataObjects.flattenedW3C]; 
-    */
+    return await sdj(page, opts);
+    
 }
 
 module.exports.takeStep = takeStep;

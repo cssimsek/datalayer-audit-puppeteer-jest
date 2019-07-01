@@ -15,7 +15,7 @@ async function processcaptureddatalayer(responseBodyFromTestStep) {
   for await (ddProp of ddPropIterator) {
     for await (flatProp of dataLayerFromPageEntries) {
       if (new RegExp(ddProp['Key_Pattern']).test(flatProp[0])) {
-        arrayOfTests.push([flatProp[1], new RegExp(ddProp['Value_Pattern']), ddProp['Key_Pattern']]);
+        arrayOfTests.push([flatProp[1], new RegExp(ddProp['Value_Pattern']), ddProp['Key_Pattern'],ddProp['Nullable']]);
       }
     }
   }

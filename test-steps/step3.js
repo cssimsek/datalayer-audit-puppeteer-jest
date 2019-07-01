@@ -1,22 +1,18 @@
-const gdts = require('../utilities/getdatatakescreenshot');
+const sdj = require('../utilities/stepdatajob');
 
-async function takeStep(page,opts) {
+async function takeStep(page, opts) {
 
     await page.waitFor(2000);
 
     await page.waitFor('.button--full');
 
     //Click Add To Basket
-    const addToBasketClicked = await page.evaluate(()=> {
+    await page.evaluate(() => {
         return Promise.resolve(document.querySelector('.button--full').click());
-    }); 
+    });
 
-    return addToBasketClicked;
-
-    /*
-    const dataObjects = await opts.gdts.getdatatakescreenshot(page,opts.targetdata);
-    return [dataObjects.datalayer,dataObjects.flattenedW3C]; 
-    */
+    return await sdj(page, opts);
+    
 }
 
 module.exports.takeStep = takeStep;

@@ -14,6 +14,8 @@ const gdts = require('./utilities/getdatatakescreenshot');
 const processCapturedDataLayer = require('./utilities/processcaptureddatalayer');
 //Utility to set network interception rules
 const setNetworkInterception = require('./utilities/setnetworkinterception');
+//Allow for null if defined so in datadictionary
+const isNullValue = require('./utilities/nullvalchecker');
 
 //Create Test Steps Generator
 const StepsCollection = new FilesInDirectory('./test-steps');
@@ -42,17 +44,18 @@ const stepOpts = {
 
 expect.extend({
   toMatchDataDictRegex(value, dlMatchArray) {
-    const pass = dlMatchArray[1].test(value);
+    let pass = dlMatchArray[1].test(value);
+    pass = pass || dlMatchArray[3] && isNullValue(value);
     if (pass) {
       return {
         message: () =>
-          `expected ${value} to test true for ${dlMatchArray[1]} of keyPattern ${dlMatchArray[2]}`,
+          `expected ${value} to NOT test true for ${dlMatchArray[1]} of keyPattern ${dlMatchArray[2]}${dlMatchArray[3]?'. Or be a nullable value':''}`,
         pass: true,
       };
     } else {
       return {
         message: () =>
-          `expected ${value} to test true for ${dlMatchArray[1]} of keyPattern ${dlMatchArray[2]}`,
+          `expected ${value} to test true for ${dlMatchArray[1]} of keyPattern ${dlMatchArray[2]}${dlMatchArray[3]?'. Or field is nullable':''}`,
         pass: false,
       };
     }
