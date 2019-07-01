@@ -74,7 +74,6 @@ describe('/ Home Page', () => {
     //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
     for await (testable of arrayOfDataTests) {
       console.log(testable[0], testable[1]);
-      //expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
       expect(testable[0]).toMatchDataDictRegex(testable);
     }
   });
@@ -91,7 +90,6 @@ describe('Click Consent Banner', () => {
     //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
     for await (testable of arrayOfDataTests) {
       console.log(testable[0], testable[1]);
-      //expect(testable[0]).toEqual(expect.stringMatching(testable[1]));
       expect(testable[0]).toMatchDataDictRegex(testable);
     }
   });
@@ -104,12 +102,22 @@ describe('Add To Basket Flow', () => {
 
   test('Click Add To Basket', async () => {
     const resultOfStepThree = await StepsGenerator.next().value.takeStep(page, stepOpts);
-    return resultOfStepThree;
+    const arrayOfDataTests = await processCapturedDataLayer(resultOfStepThree);
+    //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
+    for await (testable of arrayOfDataTests) {
+      console.log(testable[0], testable[1]);
+      expect(testable[0]).toMatchDataDictRegex(testable);
+    }
   });
 
   test('Go To Trolley', async () => {
     const resultOfStepFour = await StepsGenerator.next().value.takeStep(page, stepOpts);
-    return resultOfStepFour;
+    const arrayOfDataTests = await processCapturedDataLayer(resultOfStepFour);
+    //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
+    for await (testable of arrayOfDataTests) {
+      console.log(testable[0], testable[1]);
+      expect(testable[0]).toMatchDataDictRegex(testable);
+    }
   });
 
 });
@@ -120,7 +128,12 @@ describe('Postcode and Collect Flow', () => {
 
   test('Enter Postcode and Click Collection', async () => {
     const resultOfStepFive = await StepsGenerator.next().value.takeStep(page, stepOpts);
-    return resultOfStepFive;
+    const arrayOfDataTests = await processCapturedDataLayer(resultOfStepFive);
+    //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
+    for await (testable of arrayOfDataTests) {
+      console.log(testable[0], testable[1]);
+      expect(testable[0]).toMatchDataDictRegex(testable);
+    }
   });
 
 });
@@ -131,7 +144,12 @@ describe('Continue To Payment Flow', () => {
 
   test('Click Continue to Pay and Collect', async () => {
     const resultOfStepSix = await StepsGenerator.next().value.takeStep(page, stepOpts);
-    return resultOfStepSix;
+    const arrayOfDataTests = await processCapturedDataLayer(resultOfStepSix);
+    //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
+    for await (testable of arrayOfDataTests) {
+      console.log(testable[0], testable[1]);
+      expect(testable[0]).toMatchDataDictRegex(testable);
+    }
   });
 
 });
