@@ -3,12 +3,13 @@ const formFieldVals = require('../form-dummy-values/formvals.json');
 
 async function takeStep(page,opts) {
 
-    await page.waitFor(2000);
+    const postCodeField = 'input.ac-search-bar__input.form-control';
 
     //Initial Postcode field. We don't fill this
     await page.waitFor('input#basket-FulfilmentSelectorForm');
 
-    const postCodeField = 'input.ac-search-bar__input.form-control';
+    //await page.type('input#basket-FulfilmentSelectorForm', formFieldVals.step5[postCodeField], {delay: 100});
+
     await console.log(formFieldVals.step5[postCodeField]);
 
     //Click Collection

@@ -21,10 +21,16 @@ const isNullValue = require('./utilities/nullvalchecker');
 const StepsCollection = new FilesInDirectory('./test-steps');
 const StepsGenerator = StepsCollection.nextTestGenerator();
 
+//Initialise results storage
+const ResultsStorage = require('./utilities/storeresults');
+
 
 const timeout = 10000;
-let browser, page;
+let browser, page, currentResultsStore;
 beforeAll(async () => {
+
+  currentResultsStore = await new ResultsStorage();
+
   //Create browser and page
   browser = await createBrowser({
     incognito: true
@@ -127,6 +133,8 @@ describe('Postcode and Collect Flow', () => {
   beforeAll(async () => {});
 
   test('Enter Postcode and Click Collection', async () => {
+
+    await console.log(currentResultsStore.getLatestStorageDirectory());
     const resultOfStepFive = await StepsGenerator.next().value.takeStep(page, stepOpts);
     const arrayOfDataTests = await processCapturedDataLayer(resultOfStepFive);
     //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values

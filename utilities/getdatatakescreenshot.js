@@ -23,16 +23,9 @@ async function getdatatakescreenshot(page,opts){
     const datalayer = await getdatalayer(page,opts);
     //Flatten w3cDatalayer IMPORTANT - RECURSIVE FUNCTION AND NOT ASYNC
     const flatttenedW3C = await flatten(datalayer,opts.w3cDataLayerName,{});
-    //console.log(`flatttenedW3C: ${JSON.stringify(flatttenedW3C)}`);
-    //Now test flattenedW3C against imported data-dictionary name,type,patterns
-    /*
-    const testResultsArray = await Promise.all(flatttenedW3C.map(async (datalayerProperty) => {
-        const testResultObject = await testdatalayer(datalayerProperty);
-        console.log(JSON.stringify(testResultObject));
-        return testResultObject;
-    }));
-    */
-    //await storeresults(testResultsArray);
+
+    
+    
     return {datalayer:datalayer,localstorage:localstorage,sessionstorage:sessionstorage,flattenedW3C:flatttenedW3C};
 }
 
