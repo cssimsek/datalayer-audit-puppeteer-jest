@@ -4,14 +4,14 @@ I've found that folks involved in web (and mobile) analytics implementation stil
 
 ## How to Use
 
-You'll first need to `npm install` to install all the required packages in particular Puppeteer and Jest (along with their dependencies).
+You'll first need to `git clone` and then `npm install` to install all the required packages - in particular Puppeteer and Jest (along with their dependencies).
 
 The example setup will navigate to a particular ecommerce site and walk through some example steps while capturing the state of a w3c datalayer throughout the flow. The initial navigation is driven by the definitions in [./targets/targeturls.json](./targets/targeturls.json)
 
 The captured data dictionary which is defined in [./targets/targetdataobjects.json](./targets/targetdataobjects.json) is recursively flattened until it matches the format 'keyNameString': 'somePrimitive'. The values found assigned to the flattened kayNameString properties are then tested against RegExp's defined in a data dictionary xlsx file which is pulled in by the [readspreadsheet.js](./utilities/readspreadsheet.js) function. 
 
 ## Data Dictionary
-The data dictionary looks like this (The RegExp's can of course be improved)
+The data dictionary for the example setup looks like the table below (the RegExp's could of course be modified / improved). [Here's the Google Sheet](https://docs.google.com/spreadsheets/d/1ydtE2LGRms56xYIAUfZShmg6gYRMCYBqo5cVsfMYQrI/edit?usp=sharing) that contains this example. To create your own data dictionary you can copy the sheet, use one of these gists ([JS](https://gist.github.com/cssimsek/cd151ba2fa6a9346db7280d731333d28#file-flatten_w3c_datalayer-js) or [Node.js](https://gist.github.com/cssimsek/cd151ba2fa6a9346db7280d731333d28#gistcomment-2951269)) to flatten your nested W3C data layer to match the expected format and define your patterns for the Key and Values. Your data dictionary should then be added to the [./datadictionary](./datadictionary) directory in .xlsx format.
 
 **DataLayer\_Property\_Flat**|**Key\_Pattern**|**Type**|**Value\_Pattern**|**Example\_Value**|**Nullable**|**Description**
 :-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:

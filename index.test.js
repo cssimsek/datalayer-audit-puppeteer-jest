@@ -4,8 +4,6 @@ const createBrowser = require('./utilities/createbrowser');
 const targeturls = require('./targets/targeturls');
 //Import target data
 const targetdata = require('./targets/targetdataobjects.json');
-//Import Steps
-//const stepCollection = require('./test-steps/step-collection');
 //More flexible approach to steps collection
 const FilesInDirectory = require('./utilities/getfilesindirectory');
 //Get data and take screenshots
@@ -23,7 +21,6 @@ const StepsGenerator = StepsCollection.nextTestGenerator();
 
 //Initialise results storage
 const ResultsStorage = require('./utilities/storeresults');
-
 
 const timeout = 10000;
 let browser, page, currentResultsStore;
@@ -43,7 +40,8 @@ beforeAll(async () => {
 const stepOpts = {
   targeturls: targeturls,
   gdts: gdts,
-  targetdata: targetdata
+  targetdata: targetdata,
+  resultStore: currentResultsStore
 };
 
 //Extend EXPECT with toMatchDataDictRegex
@@ -133,8 +131,6 @@ describe('Postcode and Collect Flow', () => {
   beforeAll(async () => {});
 
   test('Enter Postcode and Click Collection', async () => {
-
-    await console.log(currentResultsStore.getLatestStorageDirectory());
     const resultOfStepFive = await StepsGenerator.next().value.takeStep(page, stepOpts);
     const arrayOfDataTests = await processCapturedDataLayer(resultOfStepFive);
     //Iterate through data dictionary, use value 'Key_Pattern' to match now flattened array element keys, and 'Value_Pattern' to match values
