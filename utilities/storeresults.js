@@ -14,6 +14,10 @@ module.exports = class ResultStorage {
 
     async init(){
         let latestTestDirectory;
+        //Check if declared test directory exists. If not create generic test directory.
+        if (!fs.existsSync(storageLocation.directory)){
+            fs.mkdirSync(storageLocation.directory);
+        }
         //find or create test directory
         const mainPath = await path.resolve(storageLocation.directory);
         const testResultsDirectoryItems = await readDirAwait(mainPath, {
