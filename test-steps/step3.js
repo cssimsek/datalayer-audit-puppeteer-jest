@@ -4,11 +4,11 @@ async function takeStep(page, opts) {
 
     await page.waitFor(2000);
 
-    await page.waitFor('.button--full');
+    //await page.waitFor('.button--full');
 
     //Click Add To Basket
     await page.evaluate(() => {
-        return Promise.resolve(document.querySelector('.button--full').click());
+        return Promise.resolve(document.querySelectorAll('.xs-row.add-to-trolley-main.top-border button')[0].click());
     });
 
     return await sdj(page, opts);

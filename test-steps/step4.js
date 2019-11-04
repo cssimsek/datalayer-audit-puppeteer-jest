@@ -4,11 +4,11 @@ async function takeStep(page,opts) {
 
     await page.waitFor(2000);
 
-    await page.waitFor('.button.button--full.xs-hidden.sm-block');
+    await page.waitFor('.xs-12.sm-6--none.xs-order-1.sm-order-2>a');
 
     //Click Go To Trolley
     await page.evaluate(()=> {
-        return Promise.resolve(document.querySelector('.button.button--full.xs-hidden.sm-block').click());
+        return Promise.resolve(document.querySelectorAll('.xs-12.sm-6--none.xs-order-1.sm-order-2>a')[0].click());
     });
 
     await page.waitForNavigation('domcontentloaded');

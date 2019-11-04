@@ -4,12 +4,12 @@
   "description": "Audit W3C Datalayer with Puppeteer and Jest",
   "main": "index.js",
   "dependencies": {
-    "eslint": "^5.16.0",
-    "puppeteer": "^1.17.0",
-    "xlsx": "^0.14.3"
+    "eslint": "^6.6.0",
+    "puppeteer": "^2.0.0",
+    "xlsx": "^0.15.1"
   },
   "devDependencies": {
-    "jest": "^24.8.0"
+    "jest": "^24.9.0"
   },
   "scripts": {
     "test": "jest"

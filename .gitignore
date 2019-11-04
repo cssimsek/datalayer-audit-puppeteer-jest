@@ -3,9 +3,11 @@ node_modules/
 
 # Optional npm cache directory
 .npm
+.DS_Store
 
 #Credentials
 credentials/
+testresults/
 
 #Data dictionaries
 datadictionary/*.xlsx
