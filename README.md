@@ -15,7 +15,7 @@ The data dictionary for the example setup looks like the table below (the RegExp
 
 **DataLayer\_Property\_Flat**|**Key\_Pattern**|**Type**|**Value\_Pattern**|**Example\_Value**|**Nullable**|**Description**
 :-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
-digitalData\_component\_0\_componentInfo\_componentID|digitalData\_component\_\d+\_componentInfo\_componentID$|int|[0-9\\_a-zA-Z]+[a-zA-Z0-9]$|1155033\_R\_Z001A|FALSE| 
+digitalData\_component\_0\_componentInfo\_componentID|digitalData\_component\_\d+\_componentInfo\_componentID$|string|[0-9\\_a-zA-Z]+[a-zA-Z0-9]$|1155033\_R\_Z001A|FALSE| 
 digitalData\_component\_0\_componentInfo\_componentType|digitalData\_component\_\d+\_componentInfo\_componentType$|string|[a-zA-Z0-9\\_]+|images|FALSE| 
 digitalData\_components\_0\_grouping\_desc|digitalData\_components\_\d+\_grouping\_desc$|string|^([A-Z]{0,1}[a-z]*\s{0,})+[a-z]$|Category Product Grid|FALSE| 
 digitalData\_components\_0\_grouping\_type|digitalData\_components\_\d+\_grouping\_type$|string|^GL\d+$|GL0044|FALSE| 
